@@ -1,0 +1,20 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /data: VisDrone
+  - override /model: basic/yolo11-C3k2-RepVGG #
+
+model: #
+  name: yolo11-C3k2-RepVGG
+  scale: n
+  yaml_file: ${model.name}.yaml
+  base_model: yolo11
+
+logger:
+  tags: ["RepVGG"]
+  is_basic: True
+
+notes: "替换C3k2"

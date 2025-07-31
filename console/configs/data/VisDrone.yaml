@@ -1,0 +1,2 @@
+name: VisDrone
+file: ${paths.data_dir}/VisDrone/VisDrone.yaml

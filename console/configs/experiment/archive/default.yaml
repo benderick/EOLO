@@ -1,0 +1,20 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /data: VisDrone
+  - override /model: yolo11-ADown #
+
+model: #
+  name: yolo11-ADown
+  scale: s
+  yaml_file: ${model.name}.yaml
+  base_model: yolo11
+
+logger:
+  tags: [ADown]
+  is_basic: True
+
+notes: "188 ADown s 200"

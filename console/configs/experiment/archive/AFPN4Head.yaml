@@ -1,0 +1,20 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /data: VisDrone
+  - override /model: yolo11-AFPN4Head #
+
+model: #
+  name: yolo11-AFPN4Head
+  scale: s
+  yaml_file: ${model.name}.yaml
+  base_model: yolo11
+
+logger:
+  tags: ["AFPN4Head"]
+  is_basic: True
+
+notes: "更换检测头，使用四头,177"
