@@ -1,0 +1,59 @@
+# 自动生成的模型配置文件
+# 生成时间: 2025-08-07 21:52:40
+# 用户: test
+# 模板: rtdetr-Pinwheel_shapedConv-C3k2-SPPF-C2PSA-CASAtt-Concat-Detect
+# 模型名称: rtdetr-Pinwheel_shapedConv-C3k2-SPPF-C2PSA-CASAtt-Concat-Detect
+# 
+# 配置参数:
+#   - 下采样模块: Pinwheel_shapedConv
+#   - 卷积模块: C3k2  
+#   - 融合模块: Concat
+#   - 检测头: Detect
+name: rtdetr-Pinwheel_shapedConv-C3k2-SPPF-C2PSA-CASAtt-Concat-Detect
+nc: 80
+scales:
+  # [depth, width, max_channels]
+  l: [1.0, 1.0, 1024]
+DOWNSAMPLE: Pinwheel_shapedConv
+ATTENTION: CASAtt
+CONVOLUTION: C3k2
+FUSION: Concat
+HEAD: Detect
+UPSAMPLE: nn.Upsample
+C2PSA: C2PSA
+SPPF: SPPF
+
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, HGStem, [32, 48]]
+  - [-1, 6, HGBlock, [48, 128, 3]]
+  - [-1, 1, Pinwheel_shapedConv, [128, 3, 2, 1, false]]
+  - [-1, 6, HGBlock, [96, 512, 3]]
+  - [-1, 1, Pinwheel_shapedConv, [512, 3, 2, 1, false]]
+  - [-1, 6, HGBlock, [192, 1024, 5, true, false]]
+  - [-1, 6, HGBlock, [192, 1024, 5, true, true]]
+  - [-1, 6, HGBlock, [192, 1024, 5, true, true]]
+  - [-1, 1, Pinwheel_shapedConv, [1024, 3, 2, 1, false]]
+  - [-1, 6, HGBlock, [384, 2048, 5, true, false]]
+  - [-1, 1, CASAtt, []]
+
+head:
+  - [-1, 1, Conv, [256, 1, 1, None, 1, 1, false]]
+  - [-1, 1, AIFI, [1024, 8]]
+  - [-1, 1, Conv, [256, 1, 1]]
+  - [-1, 1, nn.Upsample, [None, 2, nearest]]
+  - [7, 1, Conv, [256, 1, 1, None, 1, 1, false]]
+  - [[-2, -1], 1, Concat, [1]]
+  - [-1, 3, RepC3, [256]]
+  - [-1, 1, Conv, [256, 1, 1]]
+  - [-1, 1, nn.Upsample, [None, 2, nearest]]
+  - [3, 1, Conv, [256, 1, 1, None, 1, 1, false]]
+  - [[-2, -1], 1, Concat, [1]]
+  - [-1, 3, RepC3, [256]]
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [[-1, 18], 1, Concat, [1]]
+  - [-1, 3, RepC3, [256]]
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [[-1, 13], 1, Concat, [1]]
+  - [-1, 3, RepC3, [256]]
+  - [[22, 25, 28], 1, RTDETRDecoder, [nc]]

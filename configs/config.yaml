@@ -1,0 +1,37 @@
+# @package _global_
+defaults:
+  - _self_
+  - paths: default
+  - data: ???
+  - model: ???
+  - hydra: default
+  - setting: default/yolo
+
+run_name: ${model.name}
+logger:
+  project: ${project_name}
+  group: ""
+  name: ${model.name}
+  data: ${data.name}
+  scale: ${model.scale}
+  tags: []
+  base_model: ${model.base_model}
+  is_basic: True
+  notes: ""
+  exp_timestamp: ${now}
+
+
+model:
+  yaml_file: ${model.name}.yaml
+  scale: n
+  base_model: ultralytics
+
+
+data_layout: "images-labels"
+
+# 可修改的
+project_name: Test
+epochs: 2
+device: "0,1"
+batch: 4
+use_wandb: True

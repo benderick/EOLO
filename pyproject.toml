@@ -9,8 +9,9 @@ dependencies = [
     "rootutils>=1.0.7",
     "hydra-core==1.3.2",
     "hydra-colorlog==1.2.0",
+    "wandb>=0.19.8"
 
 ]
 
 [tool.uv.sources]
-ultralytics = { path = "ultralytics", editable = true }
+ultralytics = { path = "../EOLO-ultralytics", editable = true }

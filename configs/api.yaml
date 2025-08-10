@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - _self_
+  - paths: default
+  - hydra: default
+
+project_name: "api"
+run_name: "api"

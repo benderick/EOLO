@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - _self_
+  - paths: default
+  - hydra: default
+  - template: common/yolo11
+
+project_name: "create"
+run_name: "create"
+
+user: Test
+time: ${now:%Y-%m-%d-%H-%M-%S}

@@ -1,0 +1,33 @@
+{
+    // Python 解释器路径配置
+    "python.pythonPath": ".venv/bin/python",
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    
+    // Pylance 语言服务器配置
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.indexing": true,
+    
+    // 额外的 Python 路径，包含可编辑安装的 ultralytics
+    "python.analysis.extraPaths": [
+        "../EOLO-ultralytics",
+        ".venv/lib/python3.10/site-packages"
+    ],
+    
+    // 自动搜索路径配置
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.include": [
+        "src/**",
+        "../EOLO-ultralytics/**"
+    ],
+    
+    // 启用符号跳转和引用查找
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    
+    // 工作区设置
+    "python.terminal.activateEnvironment": true,
+    "python.envFile": "${workspaceFolder}/.env"
+}

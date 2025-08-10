@@ -1,0 +1,59 @@
+# 自动生成的模型配置文件
+# 生成时间: 2025-08-10 17:37:02
+# 用户: test
+# 模板: yolo11-attn12-Concat-Detect-C3k2-Conv-C2PSA-CASAtt-SPPF-nn.Upsample
+# 模型名称: yolo11-attn12-Concat-Detect-C3k2-Conv-C2PSA-CASAtt-SPPF-nn.Upsample
+# 
+# 配置参数:
+#   - 下采样模块: Conv
+#   - 卷积模块: C3k2  
+#   - 融合模块: Concat
+#   - 检测头: Detect
+name: yolo11-attn12-Concat-Detect-C3k2-Conv-C2PSA-CASAtt-SPPF-nn.Upsample
+nc: 80
+scales:
+  # [depth, width, max_channels]
+  n: [0.5, 0.25, 1024]
+  s: [0.5, 0.5, 1024]
+  m: [0.5, 1.0, 512]
+  l: [1.0, 1.0, 512]
+  x: [1.0, 1.5, 512]
+DOWNSAMPLE: Conv
+CONVOLUTION: C3k2
+ATTENTION: CASAtt
+FUSION: Concat
+HEAD: Detect
+UPSAMPLE: nn.Upsample
+CSPATTENTION: C2PSA
+SPPF: SPPF
+
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]]
+  - [-1, 1, Conv, [128, 3, 2]]
+  - [-1, 2, C3k2, [256, false, 0.25]]
+  - [-1, 1, CASAtt, []]
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [-1, 2, C3k2, [512, false, 0.25]]
+  - [-1, 1, CASAtt, []]
+  - [-1, 1, Conv, [512, 3, 2]]
+  - [-1, 2, C3k2, [512, true]]
+  - [-1, 1, Conv, [1024, 3, 2]]
+  - [-1, 2, C3k2, [1024, true]]
+  - [-1, 1, SPPF, [1024, 5]]
+  - [-1, 2, C2PSA, [1024]]
+
+head:
+  - [-1, 1, nn.Upsample, [None, 2, nearest]]
+  - [[-1, 8], 1, Concat, [1]]
+  - [-1, 2, C3k2, [512, false]]
+  - [-1, 1, nn.Upsample, [None, 2, nearest]]
+  - [[-1, 5], 1, Concat, [1]]
+  - [-1, 2, C3k2, [256, false]]
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [[-1, 15], 1, Concat, [1]]
+  - [-1, 2, C3k2, [512, false]]
+  - [-1, 1, Conv, [512, 3, 2]]
+  - [[-1, 12], 1, Concat, [1]]
+  - [-1, 2, C3k2, [1024, true]]
+  - [[18, 21, 24], 1, Detect, [nc]]

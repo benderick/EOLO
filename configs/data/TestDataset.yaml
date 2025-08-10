@@ -1,0 +1,2 @@
+name: TestDataset
+file: ${paths.data_dir}/VisDrone/TestDataset.yaml
